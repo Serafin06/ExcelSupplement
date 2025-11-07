@@ -43,7 +43,7 @@ class SQLAlchemyRepository(DatabaseRepository):
                 RECEPTURA_1,
                 TECH,
                 JM2
-            FROM KO
+            FROM ZO
             WHERE ART IN ({placeholders})
         """)
 

@@ -86,17 +86,23 @@ class ArticleData:
     @property
     def total_thickness(self) -> float:
         """Całkowita grubość wszystkich warstw"""
-        return sum(layer.thickness for layer in self.layers if layer.thickness)
+        return sum(float(layer.thickness) for layer in self.layers if layer.thickness)
 
     def get_layer_proportions(self) -> List[Tuple[MaterialLayer, float]]:
         """Zwraca warstwy z proporcjami procentowymi"""
-        total = self.total_thickness
+        # total też musi być float
+        total = sum(float(layer.thickness) for layer in self.layers if layer.thickness)
         if total == 0:
             return [(layer, 0.0) for layer in self.layers]
 
-        return [
-            (layer, (layer.thickness / total * 100) if layer.thickness else 0.0)
-            for layer in self.layers
-        ]
+        proportions = []
+        for layer in self.layers:
+            try:
+                thickness = float(layer.thickness) if layer.thickness else 0.0
+            except (ValueError, TypeError):
+                thickness = 0.0
+            proportion = (thickness / total * 100) if total > 0 else 0.0
+            proportions.append((layer, proportion))
+        return proportions
 
 
