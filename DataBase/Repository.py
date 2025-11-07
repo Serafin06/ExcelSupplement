@@ -53,8 +53,9 @@ class SQLAlchemyRepository(DatabaseRepository):
         """)
 
         # Parametry dla LIKE
-        params = {f'art_{i}': f'{art}%' for i, art in enumerate(art_numbers)}
-        # Parametry dla dat
+        params = {f'art_{i}': f'%{art}%' for i, art in enumerate(art_numbers)}
+
+        # Zakres dat: Q4 2024 → Q3 2025
         params['start_date'] = date(2024, 9, 28)
         params['end_date'] = date(2025, 9, 30)
 
