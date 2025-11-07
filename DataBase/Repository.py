@@ -32,9 +32,8 @@ class SQLAlchemyRepository(DatabaseRepository):
         if not art_numbers:
             return {}
 
-        # Warunki LIKE dla każdego indeksu
+        # --- Pierwsze przeszukanie z ograniczeniem datowym ---
         conditions = " OR ".join([f"ART LIKE :art_{i}" for i in range(len(art_numbers))])
-
         query = text(f"""
             SELECT 
                 ART,
@@ -51,19 +50,15 @@ class SQLAlchemyRepository(DatabaseRepository):
               AND TERMIN_ZAK >= :start_date
               AND TERMIN_ZAK <= :end_date
         """)
-
-        # Parametry dla LIKE
         params = {f'art_{i}': f'%{art}%' for i, art in enumerate(art_numbers)}
-
-        # Zakres dat: Q4 2024 → Q3 2025
         params['start_date'] = date(2024, 9, 28)
         params['end_date'] = date(2025, 9, 30)
 
-        result = {}
+        found = {}
         with self.engine.connect() as conn:
             rows = conn.execute(query, params).fetchall()
             for row in rows:
-                result[row[0]] = ArticleData(
+                found[row[0]] = ArticleData(
                     art=row[0],
                     szerokosc_1=row[1],
                     grubosc_11=row[2],
@@ -71,10 +66,27 @@ class SQLAlchemyRepository(DatabaseRepository):
                     grubosc_31=row[4],
                     receptura_1=row[5],
                     tech=row[6],
-                    jm2=row[7]
+                    jm2=row[7],
+                    termin_zak=row[8]
                 )
 
-        return result
+        # --- Dodatkowe przeszukanie dla nieznalezionych indeksów ---
+        missing = [art for art in art_numbers if not any(art in key for key in found)]
+        if missing:
+            conditions_missing = " OR ".join([f"ART LIKE :art_{i}" for i in range(len(missing))])
+            query_missing = text(f"""
+                SELECT ART, TERMIN_ZAK
+                FROM ZO
+                WHERE {conditions_missing}
+            """)
+            params_missing = {f'art_{i}': f'%{art}%' for i, art in enumerate(missing)}
+
+            with self.engine.connect() as conn:
+                rows_missing = conn.execute(query_missing, params_missing).fetchall()
+                for row in rows_missing:
+                    print(f"⚠️ Znaleziono indeks w bazie poza datą: {row[0]} – TERMIN_ZAK: {row[1]}")
+
+        return found
 
     def close(self):
         """Zamyka połączenie z bazą"""

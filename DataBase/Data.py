@@ -33,6 +33,7 @@ class ArticleData:
     receptura_1: Optional[str]
     tech: Optional[float]
     jm2: Optional[str]
+    termin_zak: Optional[str]
 
     @property
     def layers(self) -> List[MaterialLayer]:
