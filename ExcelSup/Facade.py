@@ -26,6 +26,9 @@ class ExcelEnrichmentFacade:
             processor = ExcelProcessor(Path(input_path))
             processor.load()
 
+            print(f"📁 Wczytano plik: {input_path}")
+            print(f"📊 Znaleziono {len(processor.df)} wierszy")
+
             # Wzbogać dane
             enriched_df = self.enricher.enrich_dataframe(
                 processor.df,
@@ -39,9 +42,12 @@ class ExcelEnrichmentFacade:
             output = Path(output_path) if output_path else None
             processor.save(output)
 
-            print(f"✓ Przetworzono pomyślnie: {input_path}")
-            if output_path:
-                print(f"✓ Zapisano do: {output_path}")
+            print(f"✅ Przetworzono pomyślnie!")
+            print(f"💾 Zapisano do: {output_path or input_path}")
+
+            # Statystyki
+            materials_found = enriched_df['Material_type_1'].notna().sum()
+            print(f"📦 Znaleziono dane dla {materials_found} artykułów")
 
         finally:
             self.repository.close()

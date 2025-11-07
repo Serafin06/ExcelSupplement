@@ -9,7 +9,7 @@ class ExcelProcessor:
     Service do przetwarzania plików Excel (Single Responsibility Principle)
     """
 
-    def __init__(self, file_path: Path, purchase_item_column: str = 'C4'):
+    def __init__(self, file_path: Path, purchase_item_column: str = 'Purchase item number'):
         self.file_path = file_path
         self.purchase_item_column = purchase_item_column
         self.df: Optional[pd.DataFrame] = None
@@ -24,12 +24,10 @@ class ExcelProcessor:
         if self.df is None:
             raise ValueError("DataFrame not loaded. Call load() first.")
 
-        # Zakładam, że kolumna nazywa się 'Purchase item number'
-        col_name = 'Purchase item number'
-        if col_name not in self.df.columns:
-            raise ValueError(f"Column '{col_name}' not found in Excel")
+        if self.purchase_item_column not in self.df.columns:
+            raise ValueError(f"Column '{self.purchase_item_column}' not found in Excel")
 
-        items = self.df[col_name].dropna().unique().tolist()
+        items = self.df[self.purchase_item_column].dropna().unique().tolist()
         return [str(item) for item in items]
 
     def save(self, output_path: Optional[Path] = None):
