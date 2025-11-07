@@ -1,4 +1,5 @@
 from abc import abstractmethod, ABC
+from datetime import date
 from typing import List, Dict
 
 from sqlalchemy import Engine, text
@@ -27,12 +28,13 @@ class SQLAlchemyRepository(DatabaseRepository):
         self.engine = engine
 
     def get_article_data(self, art_numbers: List[str]) -> Dict[str, ArticleData]:
-        """Pobiera dane artykułów z tabeli KO"""
+        """Pobiera dane artykułów z tabeli KO - uniwersalne dopasowanie i ograniczenie datowe"""
         if not art_numbers:
             return {}
 
-        # Przygotowanie zapytania z parametrami
-        placeholders = ','.join([f':art_{i}' for i in range(len(art_numbers))])
+        # Warunki LIKE dla każdego indeksu
+        conditions = " OR ".join([f"ART LIKE :art_{i}" for i in range(len(art_numbers))])
+
         query = text(f"""
             SELECT 
                 ART,
@@ -42,18 +44,23 @@ class SQLAlchemyRepository(DatabaseRepository):
                 GRUBOSC_31,
                 RECEPTURA_1,
                 TECH,
-                JM2
+                JM2,
+                TERMIN_ZAK
             FROM ZO
-            WHERE ART IN ({placeholders})
+            WHERE ({conditions})
+              AND TERMIN_ZAK >= :start_date
+              AND TERMIN_ZAK <= :end_date
         """)
 
-        # Przygotowanie parametrów
-        params = {f'art_{i}': art for i, art in enumerate(art_numbers)}
+        # Parametry dla LIKE
+        params = {f'art_{i}': f'{art}%' for i, art in enumerate(art_numbers)}
+        # Parametry dla dat
+        params['start_date'] = date(2024, 9, 28)
+        params['end_date'] = date(2025, 9, 30)
 
         result = {}
         with self.engine.connect() as conn:
             rows = conn.execute(query, params).fetchall()
-
             for row in rows:
                 result[row[0]] = ArticleData(
                     art=row[0],
