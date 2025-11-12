@@ -16,11 +16,6 @@ class DatabaseRepository(ABC):
         pass
 
     @abstractmethod
-    def get_sales_dates(self, art_numbers: List[str]) -> Dict[str, List[str]]:
-        """Pobiera daty sprzedaży dla artykułów"""
-        pass
-
-    @abstractmethod
     def close(self):
         """Zamyka połączenie z bazą"""
         pass
@@ -148,64 +143,6 @@ class SQLAlchemyRepository(DatabaseRepository):
                             jm2=None,
                             termin_zak=row[1]
                         )
-
-        return result
-
-    def get_sales_dates(self, art_numbers: List[str]) -> Dict[str, List[str]]:
-        """Pobiera daty sprzedaży - pokazuje czy w okresie Q4'24-Q3'25 czy wcześniej"""
-        if not art_numbers:
-            return {}
-
-        conditions = []
-        params = {
-            'date_start': '2024-10-01',
-            'date_end': '2025-09-30'
-        }
-
-        for i, art in enumerate(art_numbers):
-            param_exact = f'art_exact_{i}'
-            param_like = f'art_like_{i}'
-
-            conditions.append(f"(ART = :{param_exact} OR ART LIKE :{param_like})")
-            params[param_exact] = art
-            params[param_like] = f'%{art}%'
-
-        where_clause = ' OR '.join(conditions)
-
-        query = text(f"""
-            SELECT 
-                ART,
-                DATA_SPRZ,
-                CASE 
-                    WHEN DATA_SPRZ >= :date_start AND DATA_SPRZ <= :date_end THEN 'IN_PERIOD'
-                    ELSE 'BEFORE_PERIOD'
-                END as PERIOD_FLAG
-            FROM ZO
-            WHERE ({where_clause}) AND DATA_SPRZ IS NOT NULL
-            ORDER BY ART, DATA_SPRZ DESC
-        """)
-
-        result = {}
-        with self.engine.connect() as conn:
-            rows = conn.execute(query, params).fetchall()
-
-            for row in rows:
-                db_art = row[0]
-                sale_date = row[1].strftime('%Y-%m-%d') if row[1] else ''
-                period_flag = row[2]
-
-                matched_original = None
-                for original_art in art_numbers:
-                    if original_art in db_art or db_art == original_art:
-                        matched_original = original_art
-                        break
-
-                if matched_original:
-                    if matched_original not in result:
-                        result[matched_original] = []
-                    # Ograniczamy do max 5 dat
-                    if len(result[matched_original]) < 1:
-                        result[matched_original].append(f"{sale_date} ({period_flag})")
 
         return result
 
