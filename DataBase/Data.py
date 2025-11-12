@@ -33,11 +33,11 @@ class ArticleData:
     receptura_1: Optional[str]
     tech: Optional[float]
     jm2: Optional[str]
-    # termin_zak: Optional[str]
+    termin_zak: Optional[str]
 
     @property
     def layers(self) -> List[MaterialLayer]:
-        """Ekstrahuje warstwy z receptury z grubościami, rozdzielając EVOH"""
+        """Ekstrahuje warstwy z receptury z grubościami"""
         if not self.receptura_1:
             return []
 
@@ -55,24 +55,25 @@ class ArticleData:
             thickness = all_thicknesses[i] if i < len(all_thicknesses) else None
             material_upper = material.upper().strip()
 
-            # Jeśli warstwa zawiera EVOH np. "PE-EVOH"
-            if '-EVOH' in material_upper:
-                # Rozdziel na część przed EVOH
-                base_material = material_upper.replace('-EVOH', '').strip()
-                material_type = MATERIAL_TYPE_MAPPING.get(base_material, '7-Other plastics')
-                layers.append(MaterialLayer(
-                    material=base_material,
-                    thickness=thickness,
-                    material_type=material_type
-                ))
-            # EVOH ignorujemy, więc nie dodajemy jako osobna warstwa
-            else:
-                material_type = MATERIAL_TYPE_MAPPING.get(material_upper, '7-Other plastics')
-                layers.append(MaterialLayer(
-                    material=material_upper,
-                    thickness=thickness,
-                    material_type=material_type
-                ))
+            # Obsługa złożonych warstw (np. "PE-EVOH", "PET-APET")
+            # Rozdzielamy po '-' i bierzemy wszystkie materiały OPRÓCZ EVOH i AF
+            sub_materials = [s.strip() for s in material_upper.split('-') if s.strip()]
+
+            # Filtruj EVOH i AF (additives które ignorujemy)
+            filtered = [m for m in sub_materials if m.upper() not in ['EVOH', 'AF', 'PEEL','PEEL BIAŁY']]
+
+            if not filtered:
+                continue  # Pomijamy jeśli tylko EVOH/AF
+
+            # Bierzemy pierwszy główny materiał (najważniejszy)
+            main_material = filtered[0]
+
+            material_type = MATERIAL_TYPE_MAPPING.get(main_material, '7-Other plastics')
+            layers.append(MaterialLayer(
+                material=main_material,
+                thickness=thickness,
+                material_type=material_type
+            ))
 
         return layers
 
