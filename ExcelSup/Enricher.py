@@ -22,6 +22,7 @@ class DataEnricher:
 
         # Pobierz dane z bazy
         article_data = self.repository.get_article_data(unique_items)
+        sales_dates = self.repository.get_sales_dates(unique_items)
 
         # Przygotuj kolumny dla danych bazowych
         df['SZEROKOSC_1'] = None
@@ -32,6 +33,7 @@ class DataEnricher:
         df['TECH'] = None
         df['JM2'] = None
         df['TOTAL_THICKNESS'] = None
+        df['SALES_DATES'] = None
 
         # Kolumny dla Material Type 1 (Kolumny I, J, K)
         df['Material_type_1'] = None
@@ -90,5 +92,10 @@ class DataEnricher:
                     df.at[idx, 'Material_type_3'] = layer.material_type
                     df.at[idx, 'Material_3_proportion_%'] = round(proportion, 2)
                     df.at[idx, 'Material_3_contact'] = 'YES'  # Zewnętrzna warstwa YES
+
+            # Daty sprzedaży (nawet jeśli nie ma innych danych)
+            if purchase_item in sales_dates:
+                dates_str = '; '.join(sales_dates[purchase_item][:10])  # Max 10 dat
+                df.at[idx, 'SALES_DATES'] = dates_str
 
         return df

@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96572e63-b45c-44e5-8f0a-942ccd120003" name="Changes" comment="v 1.0">
+    <list default="true" id="96572e63-b45c-44e5-8f0a-942ccd120003" name="Changes" comment="v 1.4">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataBase/Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataBase/Data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBase/Repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataBase/Repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExcelSup/Enricher.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExcelSup/Enricher.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,19 +45,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.config.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.config.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.main">
     <configuration name="config" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ExcelSupplement" />
@@ -154,7 +157,39 @@
       <option name="project" value="LOCAL" />
       <updated>1762514288845</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="v 1.1">
+      <option name="closed" value="true" />
+      <created>1762515107327</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1762515107327</updated>
+    </task>
+    <task id="LOCAL-00006" summary="v 1.2">
+      <option name="closed" value="true" />
+      <created>1762515495811</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1762515495811</updated>
+    </task>
+    <task id="LOCAL-00007" summary="v 1.3">
+      <option name="closed" value="true" />
+      <created>1762516341340</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1762516341340</updated>
+    </task>
+    <task id="LOCAL-00008" summary="v 1.4">
+      <option name="closed" value="true" />
+      <created>1762516483822</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1762516483822</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -162,17 +197,10 @@
     <MESSAGE value="v 0.1" />
     <MESSAGE value="v 0.2" />
     <MESSAGE value="v 1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.0" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/ExcelSup/Mapper.py</url>
-          <line>2</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="v 1.1" />
+    <MESSAGE value="v 1.2" />
+    <MESSAGE value="v 1.3" />
+    <MESSAGE value="v 1.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.4" />
   </component>
 </project>

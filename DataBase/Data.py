@@ -33,7 +33,7 @@ class ArticleData:
     receptura_1: Optional[str]
     tech: Optional[float]
     jm2: Optional[str]
-    termin_zak: Optional[str]
+    # termin_zak: Optional[str]
 
     @property
     def layers(self) -> List[MaterialLayer]:
@@ -65,7 +65,7 @@ class ArticleData:
                     thickness=thickness,
                     material_type=material_type
                 ))
-                # EVOH ignorujemy, więc nie dodajemy jako osobna warstwa
+            # EVOH ignorujemy, więc nie dodajemy jako osobna warstwa
             else:
                 material_type = MATERIAL_TYPE_MAPPING.get(material_upper, '7-Other plastics')
                 layers.append(MaterialLayer(
