@@ -65,6 +65,7 @@ pip install pyinstaller
 pyinstaller --onefile --noconsole excel_gui.py
 This will create an .exe file inside the dist/ directory.
 
+---
 ## 🧰 Requirements
 Python 3.9+
 
@@ -82,6 +83,7 @@ Install all dependencies with:
 
 pip install -r requirements.txt
 
+---
 ## 🧑‍💻 Customization
 To adapt the tool to your own setup:
 
@@ -93,6 +95,7 @@ Adjust the default paths and filenames.
 
 Customize the GUI text and labels if needed.
 
+---
 ## 📂 Example Workflow
 Launch the GUI:
 
@@ -108,9 +111,11 @@ Click Run.
 
 The script updates the file and saves it in the same folder or export directory.
 
+---
 ## 📄 License
 MIT License — feel free to use and modify for personal or commercial purposes.
 
+---
 ## ✨ Author
 ExcelSupplement by Serafin06
 For issues or contributions, please open a ticket in the Issues tab.
