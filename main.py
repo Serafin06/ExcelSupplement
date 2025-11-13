@@ -1,19 +1,9 @@
-from ExcelSup.Facade import ExcelEnrichmentFacade
-from config import getEngine
+from GUI.mainGUI import gui_main
 
 
 def main():
-    """Punkt wejścia aplikacji"""
-
-    # Ścieżki do plików
-    INPUT_FILE = "input.xlsx"
-    OUTPUT_FILE = "output_enriched.xlsx"
-
-    # Uruchom proces
-    engine = getEngine()
-    facade = ExcelEnrichmentFacade(engine)
-    facade.process_file(INPUT_FILE, OUTPUT_FILE)
-
+    """Punkt wejścia aplikacji - uruchamia GUI"""
+    gui_main()
 
 if __name__ == "__main__":
     main()

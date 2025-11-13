@@ -13,9 +13,11 @@ class ExcelEnrichmentFacade:
     Facade Pattern - upraszcza interfejs dla klienta
     """
 
-    def __init__(self, engine: Engine):
-        self.repository = SQLAlchemyRepository(engine)
+    def __init__(self, engine: Engine, date_start: str = '2024-10-01', date_end: str = '2025-09-30'):
+        self.repository = SQLAlchemyRepository(engine, date_start, date_end)
         self.enricher = DataEnricher(self.repository)
+        self.date_start = date_start
+        self.date_end = date_end
 
     def process_file(self, input_path: str, output_path: Optional[str] = None):
         """

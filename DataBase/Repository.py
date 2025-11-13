@@ -24,8 +24,10 @@ class DatabaseRepository(ABC):
 class SQLAlchemyRepository(DatabaseRepository):
     """Konkretna implementacja repozytorium dla SQL Server z SQLAlchemy"""
 
-    def __init__(self, engine: Engine):
+    def __init__(self, engine: Engine, date_start: str = '2024-10-01', date_end: str = '2025-09-30'):
         self.engine = engine
+        self.date_start = date_start
+        self.date_end = date_end
 
     def get_article_data(self, art_numbers: List[str]) -> Dict[str, ArticleData]:
         """Pobiera dane artykułów z tabeli ZO:
@@ -37,8 +39,8 @@ class SQLAlchemyRepository(DatabaseRepository):
 
         conditions = []
         params = {
-            'date_start': '2024-10-01',
-            'date_end': '2025-09-30'
+            'date_start': self.date_start,
+            'date_end': self.date_end
         }
 
         for i, art in enumerate(art_numbers):
