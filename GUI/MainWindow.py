@@ -61,8 +61,10 @@ class MainWindow(QMainWindow):
         requirements_text_content = """
 Plik Excel musi zawierać:
 - Kolumnę "Purchase item number" (C) - z numerami artykułów/indeksów
-- Program automatycznie doda kolumny z danymi materiałów:
-  - SZEROKOSC_1, GRUBOSC_11, GRUBOSC_21, GRUBOSC_31, RECEPTURA_1, TECH, JM2
+- Nagłówki kolumn muszą znajdować się w pierwszym wierszu (1)
+
+Program automatycznie utworzy nowy plik Excel i doda kolumny z danymi materiałów:
+  - SZEROKOSC_1, GRUBOSC_11, GRUBOSC_21, GRUBOSC_31, RECEPTURA_1, TECH (technologiczna ilość wytworzenia), JM2
   - Material_type_1/2/3 z procentowym składem i kontaktem z produktem
   - SALES_DATES - daty sprzedaży z zakresu lub informacja o wcześniejszej sprzedaży
         """
@@ -125,15 +127,11 @@ Plik Excel musi zawierać:
         self.end_date_edit.setDate(QDate(2025, 9, 30))  # Q3 2025
         self.end_date_edit.setDisplayFormat("yyyy-MM-dd")
 
-        # Przyciski szybkiego wyboru
-        quick_q4_btn = QPushButton("Q4 2024 - Q3 2025")
-        quick_q4_btn.clicked.connect(self.set_q4_q3_dates)
 
         dates_layout.addWidget(start_label)
         dates_layout.addWidget(self.start_date_edit)
         dates_layout.addWidget(end_label)
         dates_layout.addWidget(self.end_date_edit)
-        dates_layout.addWidget(quick_q4_btn)
         dates_layout.addStretch()
 
         dates_group.setLayout(dates_layout)
@@ -207,11 +205,6 @@ Plik Excel musi zawierać:
         if file_name:
             self.output_file = file_name
             self.output_file_edit.setText(file_name)
-
-    def set_q4_q3_dates(self):
-        """Ustaw domyślny zakres Q4 2024 - Q3 2025"""
-        self.start_date_edit.setDate(QDate(2024, 10, 1))
-        self.end_date_edit.setDate(QDate(2025, 9, 30))
 
     def validate_inputs(self) -> bool:
         """Walidacja danych wejściowych"""
