@@ -53,24 +53,19 @@ You can adjust the following parameters in the script:
 
 Make sure Python 3.9+ is installed.
 
-```bash
 pip install -r requirements.txt
 python main.py
 If you want to use the GUI:
 
-bash
-Skopiuj kod
 python excel_gui.py
-💾 Option 2: Build a Standalone EXE
+### 💾 Option 2: Build a Standalone EXE
 If you want to distribute the tool as a Windows executable:
 
-bash
-Skopiuj kod
 pip install pyinstaller
 pyinstaller --onefile --noconsole excel_gui.py
 This will create an .exe file inside the dist/ directory.
 
-🧰 Requirements
+## 🧰 Requirements
 Python 3.9+
 
 pandas
@@ -85,10 +80,9 @@ pyinstaller (optional, for building an .exe)
 
 Install all dependencies with:
 
-bash
-Skopiuj kod
 pip install -r requirements.txt
-🧑‍💻 Customization
+
+## 🧑‍💻 Customization
 To adapt the tool to your own setup:
 
 Replace database queries in the script with your own logic.
@@ -99,11 +93,10 @@ Adjust the default paths and filenames.
 
 Customize the GUI text and labels if needed.
 
-📂 Example Workflow
+## 📂 Example Workflow
 Launch the GUI:
 
 nginx
-Skopiuj kod
 python excel_gui.py
 Choose the Excel file you want to supplement.
 
@@ -115,10 +108,10 @@ Click Run.
 
 The script updates the file and saves it in the same folder or export directory.
 
-📄 License
+## 📄 License
 MIT License — feel free to use and modify for personal or commercial purposes.
 
-✨ Author
+## ✨ Author
 ExcelSupplement by Serafin06
 For issues or contributions, please open a ticket in the Issues tab.
 
